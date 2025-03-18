@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+FILENAME = 'wig20_d.csv'
+#FILENAME = 'acp_d.csv'
+
 def load_data(filepath):
     data = pd.read_csv(filepath)
     data['Data'] = pd.to_datetime(data['Data'])
@@ -60,7 +63,7 @@ def plot(data, macd, signal):
     plt.subplot(3, 1, 1)
     plt.plot(data.index, data, label="Closing Price", color='blue')
     plt.ylabel('Stock Value')
-    plt.title("Accesco Poland")
+    plt.title(FILENAME)
     plt.legend()
 
     # Subplot 2: MACD and Signal Line
@@ -85,35 +88,64 @@ def plot(data, macd, signal):
     # Subplot 3: MACD Histogram
     plt.subplot(3, 1, 3)
     hist = np.concatenate((macd[:len(signal)] - signal, np.zeros(len(macd) - len(signal))))
+    print(hist)
     plt.bar(data.index[:len(hist)], hist, label="MACD Histogram", color='purple', alpha=0.5)
 
     plt.xlabel('Date')
     plt.legend()
+    plt.savefig(FILENAME + "-macd.png")
 
     # Adjust layout
     plt.tight_layout()
 
 
-data = load_data('acp_d.csv')
-closing = data['Zamkniecie'][:200]
+data = load_data(FILENAME)[:150]
+closing = data['Zamkniecie']
 macd, signal = calc_macd_signal(closing.to_numpy())
 bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
 
 def simulate(closing, date, capital=1000):
     money = 0
+    portfolio_value = [capital]  # Start with initial capital
+    timestamps = [date[-1]]  # Start with the first timestamp
+
     print("START", date[-1], capital, money)
+
     for crossing in reversed(combined):
         idx, direction = crossing
         if direction == "TOP" and money > 0:
             capital = money / closing.iloc[idx]
             money = 0
+            total_value = money if money > 0 else capital * closing.iloc[idx]
+            portfolio_value.append(total_value)
+            timestamps.append(date[idx])
             print("BUY ", date[idx], capital, money, closing.iloc[idx])
         elif direction == "BOT" and capital > 0:
             money = capital * closing.iloc[idx]
             capital = 0
+            total_value = money if money > 0 else capital * closing.iloc[idx]
+            portfolio_value.append(total_value)
+            timestamps.append(date[idx])
             print("SELL", date[idx], capital, money, closing.iloc[idx])
 
-simulate(closing, data.index)
-plot(closing, macd, signal)
 
-plt.show()
+
+    # Plot the portfolio value over time
+    plt.figure(figsize=(10, 5))
+    plt.plot(timestamps, portfolio_value, label="Total Capital", marker="o", linestyle="-")
+    plt.xlabel("Date")
+    plt.ylabel("Total Capital")
+    plt.title("Portfolio Value Over Time")
+    plt.legend()
+    plt.grid()
+    # for i, value in enumerate(portfolio_value):
+    #     plt.annotate(f'{value:.2f}',
+    #                  (timestamps[i], portfolio_value[i]),
+    #                  textcoords="offset points",
+    #                  xytext=(0, 10),
+    #                  ha='center', fontsize=8, color='green')
+    plt.show()
+    plt.savefig(FILENAME + "-capital.png")
+
+plot(closing, macd, signal)
+simulate(closing, data.index)
