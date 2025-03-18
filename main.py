@@ -35,6 +35,24 @@ def calc_macd_signal(data):
 #     crossing_values = macd[:len(signal)][crossing_indices]
 #     return crossing_dates, crossing_values
 
+def crossings(macd, signal):
+    diff = macd[:len(signal)] - signal
+    crossing_indices = np.where(np.diff(np.sign(diff)))[0] # change of sign
+
+    bearish_crossings = []  # MACD crosses Signal Line from top to bottom
+    bullish_crossings = []  # MACD crosses Signal Line from bottom to top
+    combined = []
+
+    for idx in crossing_indices:
+        if diff[idx] > 0 and diff[idx + 1] < 0:  # Top to bottom
+            bearish_crossings.append(idx)
+            combined.append((idx, "TOP"))
+        elif diff[idx] < 0 and diff[idx + 1] > 0:  # Bottom to top
+            bullish_crossings.append(idx)
+            combined.append((idx, "BOT"))
+    return bullish_crossings, bearish_crossings, combined
+
+
 def plot(data, macd, signal):
     plt.figure(figsize=(16, 8))
 
@@ -51,17 +69,7 @@ def plot(data, macd, signal):
     plt.plot(data.index[:len(signal)], signal, label="Signal Line", color='red')
 
     # Find crossing points
-    diff = macd[:len(signal)] - signal
-    crossing_indices = np.where(np.diff(np.sign(diff)))[0] # change of sign
-
-    bearish_crossings = []  # MACD crosses Signal Line from top to bottom
-    bullish_crossings = []  # MACD crosses Signal Line from bottom to top
-
-    for idx in crossing_indices:
-        if diff[idx] > 0 and diff[idx + 1] < 0:  # Top to bottom
-            bearish_crossings.append(idx)
-        elif diff[idx] < 0 and diff[idx + 1] > 0:  # Bottom to top
-            bullish_crossings.append(idx)
+    bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
 
     # top to bottom
     bearish_dates = data.index[:len(signal)][bearish_crossings]
@@ -84,13 +92,28 @@ def plot(data, macd, signal):
 
     # Adjust layout
     plt.tight_layout()
-    plt.show()
-
 
 
 data = load_data('acp_d.csv')
 closing = data['Zamkniecie'][:200]
 macd, signal = calc_macd_signal(closing.to_numpy())
+bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
 
+def simulate(closing, date, capital=1000):
+    money = 0
+    print("START", date[-1], capital, money)
+    for crossing in reversed(combined):
+        idx, direction = crossing
+        if direction == "TOP" and money > 0:
+            capital = money / closing.iloc[idx]
+            money = 0
+            print("BUY ", date[idx], capital, money, closing.iloc[idx])
+        elif direction == "BOT" and capital > 0:
+            money = capital * closing.iloc[idx]
+            capital = 0
+            print("SELL", date[idx], capital, money, closing.iloc[idx])
+
+simulate(closing, data.index)
 plot(closing, macd, signal)
+
 plt.show()
