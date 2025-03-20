@@ -2,8 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-FILENAME = 'wig20_d.csv'
-#FILENAME = 'acp_d.csv'
+#FILENAME = 'wig20_d.csv'
+FILENAME = 'acp_d.csv'
+
+print(FILENAME)
 
 def load_data(filepath):
     data = pd.read_csv(filepath)
@@ -109,7 +111,8 @@ def simulate(closing, date, capital=1000):
     portfolio_value = [capital]  # Start with initial capital
     timestamps = [date[-1]]  # Start with the first timestamp
 
-    print("START", date[-1], capital, money)
+    print("TYPE", "DATE", "CAPITAL", "MONEY", "CLOSING", "TOTAL", sep='\t')
+    print("START", date[-1], capital, money, sep='\t')
 
     for crossing in reversed(combined):
         idx, direction = crossing
@@ -119,14 +122,14 @@ def simulate(closing, date, capital=1000):
             total_value = money if money > 0 else capital * closing.iloc[idx]
             portfolio_value.append(total_value)
             timestamps.append(date[idx])
-            print("BUY ", date[idx], capital, money, closing.iloc[idx])
+            print("BUY ", date[idx], capital, money, closing.iloc[idx], total_value, sep='\t')
         elif direction == "BOT" and capital > 0:
             money = capital * closing.iloc[idx]
             capital = 0
             total_value = money if money > 0 else capital * closing.iloc[idx]
             portfolio_value.append(total_value)
             timestamps.append(date[idx])
-            print("SELL", date[idx], capital, money, closing.iloc[idx])
+            print("SELL", date[idx], capital, money, closing.iloc[idx], total_value, sep='\t')
 
 
 
@@ -144,8 +147,8 @@ def simulate(closing, date, capital=1000):
     #                  textcoords="offset points",
     #                  xytext=(0, 10),
     #                  ha='center', fontsize=8, color='green')
-    plt.show()
     plt.savefig(FILENAME + "-capital.png")
+    plt.show()
 
 plot(closing, macd, signal)
 simulate(closing, data.index)
