@@ -62,7 +62,7 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 ---
 
 ### Wnioski
-Program oparty na wskaźniku **MACD** wykazał wysoką skuteczność w automatycznym handlu, prowadząc do znacznego wzrostu kapitału inwestycyjnego. Wszystkie transakcje zakończyły się zyskiem, co potwierdza przydatność **MACD** w podejmowaniu decyzji inwestycyjnych. Wykresy ilustrujące zmiany wartości portfela oraz sygnały MACD stanowią dodatkowe potwierdzenie skuteczności zastosowanej strategii.
+Program oparty na wskaźniku MACD wykazał wysoką skuteczność w automatycznym handlu, prowadząc do znacznego wzrostu kapitału inwestycyjnego. Wszystkie transakcje zakończyły się zyskiem, co potwierdza przydatność MACD w podejmowaniu decyzji inwestycyjnych. Jednak należy pamiętać, że MACD najlepiej sprawdza się w trendowych warunkach rynkowych. W sytuacjach dynamicznych zmian cen lub na rynkach o dużej zmienności może generować mylne sygnały, prowadząc do nietrafionych decyzji inwestycyjnych. Warto również zauważyć, że dane użyte w analizie były zgodne z dominującym trendem, co mogło dodatkowo wpłynąć na wysoką skuteczność strategii.
 
 ---
 
@@ -73,9 +73,18 @@ Program oparty na wskaźniku **MACD** wykazał wysoką skuteczność w automatyc
 ---
 
 ### Pliki
-- **acp_d.csv-capital.png:** Wykres wartości portfela dla **acp_d**.
-- **acp_d.csv-macd.png:** Wykres wskaźnika **MACD** dla **acp_d**.
-- **wig20_d.csv-capital.png:** Wykres wartości portfela dla **wig20_d**.
-- **wig20_d.csv-macd.png:** Wykres wskaźnika **MACD** dla **wig20_d**.
+Wykres wartości portfela oraz wskaźnika **MACD** dla **acp_d** okresu 150 oraz 2000 dni.
+
+- **acp_d.csv-capital.png**
+- **acp_d.csv-macd.png**
+- **acp_d2000.csv-capital.png**
+- **acp_d2000.csv-macd.png**
+
+Wykres wartości portfela oraz wskaźnika **MACD** dla **wig20_d** okresu 150 oraz 2000 dni.
+
+- **wig20_d.csv-capital.png**
+- **wig20_d.csv-macd.png**
+- **wig20_d2000.csv-capital.png:**
+- **wig20_d2000.csv-macd.png:**
 
 ---
