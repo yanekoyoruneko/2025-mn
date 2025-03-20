@@ -2,8 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-#FILENAME = 'wig20_d.csv'
-FILENAME = 'acp_d.csv'
+FILENAME = 'wig20_d.csv'
+#FILENAME = 'acp_d.csv'
+TIME = 2000
 
 print(FILENAME)
 
@@ -95,13 +96,13 @@ def plot(data, macd, signal):
 
     plt.xlabel('Date')
     plt.legend()
-    plt.savefig(FILENAME + "-macd.png")
+    plt.savefig(FILENAME + str(TIME) + "-macd.png")
 
     # Adjust layout
     plt.tight_layout()
 
 
-data = load_data(FILENAME)[:150]
+data = load_data(FILENAME)[:TIME]
 closing = data['Zamkniecie']
 macd, signal = calc_macd_signal(closing.to_numpy())
 bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
@@ -147,7 +148,7 @@ def simulate(closing, date, capital=1000):
     #                  textcoords="offset points",
     #                  xytext=(0, 10),
     #                  ha='center', fontsize=8, color='green')
-    plt.savefig(FILENAME + "-capital.png")
+    plt.savefig(FILENAME + str(TIME) + "-capital.png")
     plt.show()
 
 plot(closing, macd, signal)
