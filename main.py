@@ -2,9 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-FILENAME = 'wig20_d.csv'
-#FILENAME = 'acp_d.csv'
-TIME = 2000
+#FILENAME = 'wig20_d.csv'
+FILENAME = 'acp_d.csv'
+TIME = 150
 
 print(FILENAME)
 
@@ -109,11 +109,11 @@ bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
 
 def simulate(closing, date, capital=1000):
     money = 0
-    portfolio_value = [capital]  # Start with initial capital
+    portfolio_value = [capital * closing.iloc[-1]]  # Start with initial capital
     timestamps = [date[-1]]  # Start with the first timestamp
 
     print("TYPE", "DATE", "CAPITAL", "MONEY", "CLOSING", "TOTAL", sep='\t')
-    print("START", date[-1], capital, money, sep='\t')
+    print("START", date[-1], capital, money, portfolio_value[0], sep='\t')
 
     for crossing in reversed(combined):
         idx, direction = crossing
@@ -123,16 +123,13 @@ def simulate(closing, date, capital=1000):
             total_value = money if money > 0 else capital * closing.iloc[idx]
             portfolio_value.append(total_value)
             timestamps.append(date[idx])
-            print("BUY ", date[idx], capital, money, closing.iloc[idx], total_value, sep='\t')
         elif direction == "BOT" and capital > 0:
             money = capital * closing.iloc[idx]
             capital = 0
             total_value = money if money > 0 else capital * closing.iloc[idx]
             portfolio_value.append(total_value)
             timestamps.append(date[idx])
-            print("SELL", date[idx], capital, money, closing.iloc[idx], total_value, sep='\t')
-
-
+            print("SELL", date[idx], total_value, (total_value / portfolio_value[-2])*100, sep='\t\t')
 
     # Plot the portfolio value over time
     plt.figure(figsize=(10, 5))

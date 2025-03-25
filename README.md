@@ -1,15 +1,65 @@
-## Analiza Bota Handlującego na podstawie MACD
+# Analiza wskażnika MACD
+# Jan Wiśniewski
 
-### Wstęp
+## Wstęp
+
+### **EMA**
+Wartość EMA dla $i$-tego przedziału czasu można obliczyć rekurencyjnie za pomocą zależności:
+
+$$
+EMA_N = \frac{p_0 + (1 - \alpha) p_1 + (1 - \alpha)^2 p_2 + \dots + (1 - \alpha)^N p_N}
+{1 + (1 - \alpha) + (1 - \alpha)^2 + \dots + (1 - \alpha)^N}
+$$
+
+gdzie:
+
+- $p_i$ jest próbką z i-tego dnia, $p_0$ jest próbką z aktualnego dnia, $p_N$ - to próbka sprzed
+$N$ dni.
+- liczba okresów: $N$,
+- współczynnik wygładzający: $\alpha = \frac{2}{N + 1}$.
+
+### **MACD**
 Wskaźnik **MACD** (Moving Average Convergence Divergence) to popularne narzędzie analizy technicznej stosowane w tradingu, które służy do identyfikacji zmian momentum na rynku. Składa się z trzech głównych elementów:
 
 1. **Linia MACD** – różnica między krótkoterminową (zwykle 12-okresową) i długoterminową (zwykle 26-okresową) średnią kroczącą.
 2. **Linia sygnałowa** – wygładzona średnia krocząca (zwykle 9-okresowa) linii MACD.
 3. **Histogram MACD** – różnica między linią MACD a linią sygnałową, która wizualizuje siłę i kierunek trendu.
 
-Program został opracowany w celu automatycznego podejmowania decyzji o kupnie lub sprzedaży instrumentu finansowego na podstawie sygnałów generowanych przez wskaźnik **MACD**. Symulacja została przeprowadzona z kapitałem początkowym wynoszącym 1000 jednostek instrumentu finansowego. Analizowany okres wynosi 150 ostatnich dni z zawartych danych. Analiza obejmuje zmiany wartości portfela inwestycyjnego oraz skuteczność transakcji.
+### Wejście
 
----
+Wejście składa się z dwóch zestawów danych: **acp_d** i **wig20_d**, które zawierają historyczne notowania odpowiednich instrumentów finansowych.
+
+### **Struktura wejścia:**
+
+Każdy zbiór danych to tabela, w której każda kolumna reprezentuje określoną cechę notowań giełdowych.
+
+- **Data** – data notowania.
+- **Cena zamknięcia** – wartość akcji na koniec dnia.
+
+### 1. acp_d
+Zawiera dane dotyczące spółki **Aspello Poland**. Wykres MACD dla okresu 2000 dni i 150 dni:
+
+![acp_d.csv-macd.png](acp_d.csv2000-macd.png)
+![acp_d.csv-macd.png](acp_d.csv-macd.png)
+
+Na wykresie widać silny trend rosnący w góre.
+
+### 2. wig20_d
+Zawiera dane dotyczące indeksu **WIG20**. Wykres MACD dla okresu 2000 dni i 150 dni:
+
+![wig20_d.csv-macd.png](wig20_d.csv2000-macd.png)
+![wig20_d.csv-macd.png](wig20_d.csv-macd.png)
+
+Zestawy danych dla 2000 dni generują dużo liczbe przecieć MACD z SIGNAL dlatego w celu łatwiejszej analizy posłuże się okresem ostatnich 150 dni.
+
+### Symulacja
+
+Program został opracowany w celu automatycznego podejmowania decyzji o kupnie lub sprzedaży instrumentu finansowego na podstawie sygnałów generowanych przez wskaźnik **MACD**
+
+- Przecięcie od dołu – sygnał kupna aktywa,
+- Przecięcie od góry – sygnał sprzedaży aktywa
+
+Symulacja została przeprowadzona z kapitałem początkowym wynoszącym 1000 jednostek instrumentu finansowego. Analizowany okres wynosi 150 ostatnich dni z zawartych danych. Analiza obejmuje zmiany wartości portfela inwestycyjnego oraz skuteczność transakcji.
 
 ### Wyniki Symulacji dla acp_d
 - **Analizowany okres**: od 2024-07-23 do 2025-02-28
@@ -17,12 +67,18 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 - **Kapitał końcowy:** 135526.42 jednostek
 - **Liczba transakcji:** 4 (2 kupna, 2 sprzedaże)
 
-#### Analiza Transakcji dla acp_d
-1. **SELL 2024-10-29**: Sprzedano instrumenty za 89750.0 jednostek po cenie 89.75.
+#### Analiza Transakcji dla symulacji acp_d
+1. **SELL 2024-10-29**: Sprzedano instrumenty za 89750.0 PLN jednostek po cenie 89.75.
 2. **BUY 2024-11-26**: Zakupiono 1044.21 jednostek za 85.95 jednostek każda.
-3. **SELL 2024-12-16**: Sprzedano instrumenty za 96955.06 jednostek po cenie 92.85.
+	- Wzrot 4%
+3. **SELL 2024-12-16**: Sprzedano instrumenty za 96955.06 PLN jednostek po cenie 92.85.
+	- Wzrot 12%
 4. **BUY 2025-01-20**: Zakupiono 1003.16 jednostek za 96.65 jednostek każda.
-5. **SELL 2025-02-20**: Sprzedano instrumenty za 135526.42 jednostek po cenie 135.1.
+	- Wzrot 1%
+5. **SELL 2025-02-20**: Sprzedano instrumenty za 135526.42 PLN jednostek po cenie 135.1.
+	- Wzrot 23%
+
+Końcowo: 53%
 
 ---
 
@@ -32,15 +88,24 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 - **Kapitał końcowy:** 2386334.55 jednostek
 - **Liczba transakcji:** 7 (4 kupna, 3 sprzedaże)
 
-#### Analiza Transakcji dla wig20_d
+#### Analiza Transakcji dla symulacji wig20_d
 1. **SELL 2024-11-15**: Sprzedano instrumenty za 2188750.0 jednostek po cenie 2188.75.
 2. **BUY 2024-11-25**: Zakupiono 993.64 jednostek za 2202.76 jednostek każda.
+	- Wzrot 1%
 3. **SELL 2024-12-17**: Sprzedano instrumenty za 2197821.93 jednostek po cenie 2211.89.
+	- Wzrot 2%
 4. **BUY 2025-01-09**: Zakupiono 977.70 jednostek za 2247.94 jednostek każda.
+p	- Wzrot 1%
 5. **SELL 2025-02-05**: Sprzedano instrumenty za 2341329.46 jednostek po cenie 2394.72.
+	- Wzrot 13%
 6. **BUY 2025-02-10**: Zakupiono 933.72 jednostek za 2507.54 jednostek każda.
+	- Wzrot 3%
 7. **SELL 2025-02-24**: Sprzedano instrumenty za 2386334.55 jednostek po cenie 2555.74.
+	- Wzrot 5%
 8. **BUY 2025-03-13**: Zakupiono 889.41 jednostek za 2683.05 jednostek każda.
+	- Wzrot 2%
+
+Końcowo: 17%
 
 ---
 
@@ -50,8 +115,6 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 
 ![acp_d.csv-capital.png](acp_d.csv-capital.png)
 ![wig20_d.csv-capital.png](wig20_d.csv-capital.png)
-![acp_d.csv-macd.png](acp_d.csv-macd.png)
-![wig20_d.csv-macd.png](wig20_d.csv-macd.png)
 
 ---
 
@@ -62,7 +125,7 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 ---
 
 ### Wnioski
-Program oparty na wskaźniku MACD wykazał wysoką skuteczność w automatycznym handlu, prowadząc do znacznego wzrostu kapitału inwestycyjnego. Wszystkie transakcje zakończyły się zyskiem, co potwierdza przydatność MACD w podejmowaniu decyzji inwestycyjnych. Jednak należy pamiętać, że MACD najlepiej sprawdza się w trendowych warunkach rynkowych. W sytuacjach dynamicznych zmian cen lub na rynkach o dużej zmienności może generować mylne sygnały, prowadząc do nietrafionych decyzji inwestycyjnych. Warto również zauważyć, że dane użyte w analizie były zgodne z dominującym trendem, co mogło dodatkowo wpłynąć na wysoką skuteczność strategii.
+Program oparty na wskaźniku MACD wykazał wysoką skuteczność w automatycznym handlu, prowadząc do znacznego wzrostu kapitału inwestycyjnego. Wszystkie transakcje zakończyły się zyskiem, co potwierdza przydatność MACD w podejmowaniu decyzji inwestycyjnych. Jednak należy pamiętać, że MACD najlepiej sprawdza się w trendowych warunkach rynkowych. W sytuacjach dynamicznych zmian cen lub na rynkach o dużej zmienności może generować mylne sygnały, prowadząc do nietrafionych decyzji inwestycyjnych. Warto również zauważyć, że dane użyte w analizie były zgodne z dominującym trendem, co mogło dodatkowo wpłynąć na wysoką skuteczność strategii. Trend jest potwierdzony biorąc pod uwage szerszą perspektywe dla wykresu z 2000 dni. Lącznie MACD przyniósł zysk w przeważającej liczbie tranzakcji.
 
 ---
 
@@ -84,7 +147,7 @@ Wykres wartości portfela oraz wskaźnika **MACD** dla **wig20_d** okresu 150 or
 
 - **wig20_d.csv-capital.png**
 - **wig20_d.csv-macd.png**
-- **wig20_d2000.csv-capital.png:**
-- **wig20_d2000.csv-macd.png:**
+- **wig20_d2000.csv-capital.png**
+- **wig20_d2000.csv-macd.png**
 
 ---
