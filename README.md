@@ -27,7 +27,7 @@ Wskaźnik **MACD** (Moving Average Convergence Divergence) to popularne narzędz
 
 ### Wejście
 
-Wejście składa się z dwóch zestawów danych: **acp_d** i **wig20_d**, które zawierają historyczne notowania odpowiednich instrumentów finansowych.
+Wejście składa się z dwóch zestawów danych: **acp_d** które zawierają historyczne notowania odpowiednich instrumentów finansowych.
 
 ### **Struktura wejścia:**
 
@@ -35,24 +35,38 @@ Każdy zbiór danych to tabela, w której każda kolumna reprezentuje określon�
 
 - **Data** – data notowania.
 - **Cena zamknięcia** – wartość akcji na koniec dnia.
+## Analiza MACD w pomocy przy kupnie sprzedaży
 
-### 1. acp_d
-Zawiera dane dotyczące spółki **Aspello Poland**. Wykres MACD dla okresu 2000 dni i 150 dni:
+![acp_d.csv-macd.png](acp_d.csv1000-macd.png)
 
-![acp_d.csv-macd.png](acp_d.csv2000-macd.png)
-![acp_d.csv-macd.png](acp_d.csv-macd.png)
+Pierwszy wykres przedstawia notowania akcji firmy Asseco Poland w całym badanym
+okresie. Spadek jest zauważalny w 2021 spowodowany pandemią oraz 2023.
+Duży wzrost można zauważyć zaczynając od początku stycznia 2024 były to skutki
+solidnych wyników finansowe spółki oraz rosnący portfel zamówień.
+Zródło:
+https://pl.asseco.com/aktualnosci/asseco-z-dobrymi-wynikami-po-trzech-kwartalach-2024-roku-i-solidnym-portfelem-zamowien-na-caly-biezacy-rok-5417?utm_source=chatgpt.com
 
-Na wykresie widać silny trend rosnący w góre.
+Wykres poniżej notowań giełdy przedstawia wskaźnik MACD wraz z linią SIGNAL, ukazując zarówno
+mniejsze, jak i większe wahania – zarówno w pobliżu zera (na osi wartości), jak
+i w bardziej odległych zakresach. Zgodnie z teorią, na wykresie oznaczono
+sugerowane punkty kupna oraz sprzedaży, wynikające z
+przecięć obu linii.
 
-### 2. wig20_d
-Zawiera dane dotyczące indeksu **WIG20**. Wykres MACD dla okresu 2000 dni i 150 dni:
+Wykres poniżej notowań giełdy przedstawia wskaźnik MACD wraz z linią SIGNAL, ukazując zarówno
+mniejsze, jak i większe wahania – zarówno w pobliżu zera (na osi wartości), jak
+i w bardziej odległych zakresach. Zgodnie z teorią, na wykresie oznaczono
+sugerowane punkty kupna oraz sprzedaży, wynikające z
+przecięć obu linii.
 
-![wig20_d.csv-macd.png](wig20_d.csv2000-macd.png)
-![wig20_d.csv-macd.png](wig20_d.csv-macd.png)
+![acp_d.csv100-macd.png](acp_d.csv100-macd.png "Okres spadku")
 
-Zestawy danych dla 2000 dni generują dużo liczbe przecieć MACD z SIGNAL dlatego w celu łatwiejszej analizy posłuże się okresem ostatnich 150 dni.
+W badanym okresie wskaźnik MACD wygenerował kilka fałszywych
+sygnałów do kupna, które później przez spadki w notowaniach przynosiły straty.
+Wynika to z faktu, iż brakuje w tych miejscach wyraźnych trendów rosnących lub
+spadkowych. Wskaźnik MACD zatem błędnie przewiduje większe zmiany w
+trendach, gdy one jednak nie występują, a nie przewiduje tych prawdziwych.
 
-### Symulacja
+## Symulacja
 
 Program został opracowany w celu automatycznego podejmowania decyzji o kupnie lub sprzedaży instrumentu finansowego na podstawie sygnałów generowanych przez wskaźnik **MACD**
 

@@ -4,15 +4,17 @@ import numpy as np
 
 #FILENAME = 'wig20_d.csv'
 FILENAME = 'acp_d.csv'
-TIME = 150
+S_TIME = 100
+TIME = 100
 
 print(FILENAME)
 
 def load_data(filepath):
     data = pd.read_csv(filepath)
     data['Data'] = pd.to_datetime(data['Data'])
-    data = data[::-1]  # reverse so the most recent is at index 0
     data.set_index('Data', inplace=True)
+    data = data.loc["2021-09-01":"2022-04-01"]
+    data = data[::-1]  # reverse so the most recent is at index 0
     return data
 
 def EMA(p, N):
@@ -63,14 +65,14 @@ def plot(data, macd, signal):
     plt.figure(figsize=(16, 8))
 
     # Subplot 1: Closing Price
-    plt.subplot(3, 1, 1)
+    plt.subplot(2, 1, 1)
     plt.plot(data.index, data, label="Closing Price", color='blue')
     plt.ylabel('Stock Value')
     plt.title(FILENAME)
     plt.legend()
 
     # Subplot 2: MACD and Signal Line
-    plt.subplot(3, 1, 2)
+    plt.subplot(2, 1, 2)
     plt.plot(data.index[:len(macd)], macd, label="MACD", color='green')
     plt.plot(data.index[:len(signal)], signal, label="Signal Line", color='red')
 
@@ -88,11 +90,11 @@ def plot(data, macd, signal):
     plt.scatter(bullish_dates, bullish_values, color='green', marker='^', label="Bullish Cross", zorder=5)
     plt.legend()
 
-    # Subplot 3: MACD Histogram
-    plt.subplot(3, 1, 3)
-    hist = np.concatenate((macd[:len(signal)] - signal, np.zeros(len(macd) - len(signal))))
-    print(hist)
-    plt.bar(data.index[:len(hist)], hist, label="MACD Histogram", color='purple', alpha=0.5)
+    # # Subplot 3: MACD Histogram
+    # plt.subplot(3, 1, 3)
+    # hist = np.concatenate((macd[:len(signal)] - signal, np.zeros(len(macd) - len(signal))))
+    # print(hist)
+    # plt.bar(data.index[:len(hist)], hist, label="MACD Histogram", color='purple', alpha=0.5)
 
     plt.xlabel('Date')
     plt.legend()
@@ -102,7 +104,8 @@ def plot(data, macd, signal):
     plt.tight_layout()
 
 
-data = load_data(FILENAME)[:TIME]
+# data = load_data(FILENAME)[:TIME]
+data = load_data(FILENAME)
 closing = data['Zamkniecie']
 macd, signal = calc_macd_signal(closing.to_numpy())
 bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
@@ -110,7 +113,9 @@ bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
 def simulate(closing, date, capital=1000):
     money = 0
     portfolio_value = [capital * closing.iloc[-1]]  # Start with initial capital
-    timestamps = [date[-1]]  # Start with the first timestamp
+    capital_value = [capital]
+    p_timestamps = [date[-1]]  # Start with the first timestamp
+    c_timestamps = [date[-1]]  # Start with the first timestamp
 
     print("TYPE", "DATE", "CAPITAL", "MONEY", "CLOSING", "TOTAL", sep='\t')
     print("START", date[-1], capital, money, portfolio_value[0], sep='\t')
@@ -121,19 +126,24 @@ def simulate(closing, date, capital=1000):
             capital = money / closing.iloc[idx]
             money = 0
             total_value = money if money > 0 else capital * closing.iloc[idx]
-            portfolio_value.append(total_value)
-            timestamps.append(date[idx])
+            capital_value.append(capital)
+            c_timestamps.append(date[idx])
+            # portfolio_value.append(total_value)
+            # timestamps.append(date[idx])
         elif direction == "BOT" and capital > 0:
             money = capital * closing.iloc[idx]
             capital = 0
             total_value = money if money > 0 else capital * closing.iloc[idx]
             portfolio_value.append(total_value)
-            timestamps.append(date[idx])
+            p_timestamps.append(date[idx])
             print("SELL", date[idx], total_value, (total_value / portfolio_value[-2])*100, sep='\t\t')
 
     # Plot the portfolio value over time
     plt.figure(figsize=(10, 5))
-    plt.plot(timestamps, portfolio_value, label="Total Capital", marker="o", linestyle="-")
+    plt.subplot(2, 1, 1)
+    plt.plot(p_timestamps, portfolio_value, label="Total Capital", marker="o", linestyle="-")
+    plt.subplot(2, 1, 2)
+    plt.plot(c_timestamps, capital_value, label="Total Capital", marker="o", linestyle="-")
     plt.xlabel("Date")
     plt.ylabel("Total Capital")
     plt.title("Portfolio Value Over Time")
