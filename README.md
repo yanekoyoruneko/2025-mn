@@ -35,36 +35,70 @@ Każdy zbiór danych to tabela, w której każda kolumna reprezentuje określon�
 
 - **Data** – data notowania.
 - **Cena zamknięcia** – wartość akcji na koniec dnia.
+
 ## Analiza MACD w pomocy przy kupnie sprzedaży
+
+---
 
 ![acp_d.csv-macd.png](acp_d.csv1000-macd.png)
 
 Pierwszy wykres przedstawia notowania akcji firmy Asseco Poland w całym badanym
 okresie. Spadek jest zauważalny w 2021 spowodowany pandemią oraz 2023.
 Duży wzrost można zauważyć zaczynając od początku stycznia 2024 były to skutki
-solidnych wyników finansowe spółki oraz rosnący portfel zamówień.
-Zródło:
-https://pl.asseco.com/aktualnosci/asseco-z-dobrymi-wynikami-po-trzech-kwartalach-2024-roku-i-solidnym-portfelem-zamowien-na-caly-biezacy-rok-5417?utm_source=chatgpt.com
+[solidnych wyników](https://pl.asseco.com/aktualnosci/asseco-z-dobrymi-wynikami-po-trzech-kwartalach-2024-roku-i-solidnym-portfelem-zamowien-na-caly-biezacy-rok-5417?utm_source=chatgpt.com)
+finansowych spółki oraz rosnący portfel zamówień.
 
-Wykres poniżej notowań giełdy przedstawia wskaźnik MACD wraz z linią SIGNAL, ukazując zarówno
-mniejsze, jak i większe wahania – zarówno w pobliżu zera (na osi wartości), jak
-i w bardziej odległych zakresach. Zgodnie z teorią, na wykresie oznaczono
-sugerowane punkty kupna oraz sprzedaży, wynikające z
-przecięć obu linii.
+Dolny wykres przedstawia wskaźnik MACD (Moving Average Convergence Divergence) dla akcji Asseco Poland w analizowanym okresie.
 
-Wykres poniżej notowań giełdy przedstawia wskaźnik MACD wraz z linią SIGNAL, ukazując zarówno
-mniejsze, jak i większe wahania – zarówno w pobliżu zera (na osi wartości), jak
-i w bardziej odległych zakresach. Zgodnie z teorią, na wykresie oznaczono
-sugerowane punkty kupna oraz sprzedaży, wynikające z
-przecięć obu linii.
+Kluczowe momenty:
+
+- 2021-07-2022-01: Wystąpił bearish cross, gdy
+  linia MACD przecięła linię sygnałową od góry, co zwiastowało spadek cen.
+
+- 2022-07-2023-01: Odnotowano bullish cross, czyli
+  przecięcie linii MACD od dołu, sygnalizujące potencjalny wzrost wartości
+  akcji.
+
+- 2024-01-2025-01: Wskaźnik MACD pozostaje w trendzie wzrostowym, co
+  potwierdza silną pozycję spółki, wspieraną przez dobre wyniki finansowe i
+  rosnący portfel zamówień.
+
+Wykres MACD uzupełnia analizę cen akcji, pokazując momenty zmiany trendu oraz siłę ruchów cenowych.
 
 ![acp_d.csv100-macd.png](acp_d.csv100-macd.png "Okres spadku")
 
-W badanym okresie wskaźnik MACD wygenerował kilka fałszywych
-sygnałów do kupna, które później przez spadki w notowaniach przynosiły straty.
-Wynika to z faktu, iż brakuje w tych miejscach wyraźnych trendów rosnących lub
-spadkowych. Wskaźnik MACD zatem błędnie przewiduje większe zmiany w
-trendach, gdy one jednak nie występują, a nie przewiduje tych prawdziwych.
+### **Opis okresu spadku (2021-09 – 2022-03)**
+
+1. **Wartość kapitału (wykres górny)**
+   - W okresie od **września 2021 do marca 2022** widoczny jest **spadek wartości portfela** z około **77 500 zł do 67 500 zł**, co oznacza stratę na poziomie **~13%**.
+   - Największe spadki występują w **listopadzie 2021** oraz **styczniu–lutym 2022**, co może być związane z ogólną niepewnością rynkową (np. inflacja, zmiany stóp procentowych).
+
+2. **Analiza wskaźnika MACD (wykres dolny)**
+   - **2021-10 – 2021-11:** Wystąpiło **bearish cross** (skrzyżowanie niedźwiedzie), gdy linia MACD przecięła linię sygnałową **od góry**, co było wczesnym sygnałem do sprzedaży.
+   - **2022-01 – 2022-02:** Kolejne przecięcie w dół (**bearish cross**) potwierdziło kontynuację trendu spadkowego.
+   - W tym okresie **brak wyraźnych sygnałów kupna** (bullish cross), co wskazuje na **słabość rynku**.
+
+---
+
+### **Ocena przydatności MACD w podejmowaniu decyzji**
+
+#### **Transakcja 1: Sprzedaż po bearish cross (2021-10)**
+- **Sygnał:** Bearish cross (MACD przecina SIGNAL od góry).
+- **Akcja:** Sprzedaż akcji na początku listopada 2021.
+- **Wynik:** Uniknięcie dalszych spadków – gdyby inwestor trzymał akcje do marca 2022, strata wyniosłaby **~13%**.
+
+#### **Transakcja 2: Brak sygnału kupna (2022-01 – 2022-03)**
+- **Sygnał:** Brak bullish cross (MACD pozostaje poniżej SIGNAL).
+- **Interpretacja:** Wskaźnik prawidłowo **nie generował fałszywych sygnałów kupna**, co potwierdzało trend spadkowy.
+
+#### **Podsumowanie skuteczności MACD**
+- **Zalety:**
+  - Wykrył **początek trendu spadkowego** (bearish cross w 2021-10).
+  - Uniknął **fałszywych sygnałów kupna** w trakcie spadków.
+- **Wady:**
+  - Nie wskazał **optymalnego momentu wyjścia** (np. odbicia w marcu 2022), ponieważ MACD reaguje z opóźnieniem.
+- **Wniosek:** MACD jest **przydatny jako filtr trendu**, ale powinien być używany z innymi wskaźnikami (np. RSI, wolumen) dla lepszej precyzji.
+
 
 ## Symulacja
 

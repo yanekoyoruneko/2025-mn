@@ -140,13 +140,10 @@ def simulate(closing, date, capital=1000):
 
     # Plot the portfolio value over time
     plt.figure(figsize=(10, 5))
-    plt.subplot(2, 1, 1)
+    plt.title("Portfolio Value Over Time")
     plt.plot(p_timestamps, portfolio_value, label="Total Capital", marker="o", linestyle="-")
-    plt.subplot(2, 1, 2)
-    plt.plot(c_timestamps, capital_value, label="Total Capital", marker="o", linestyle="-")
     plt.xlabel("Date")
     plt.ylabel("Total Capital")
-    plt.title("Portfolio Value Over Time")
     plt.legend()
     plt.grid()
     # for i, value in enumerate(portfolio_value):
