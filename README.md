@@ -1,5 +1,9 @@
-# Analiza wskażnika MACD
-# Jan Wiśniewski
+---
+title: Analiza wskażnika MACD
+author: Jan Wiśniewski
+geometry: margin=3cm
+output: sprawozdanie.pdf
+---
 
 ## Wstęp
 
@@ -38,9 +42,9 @@ Każdy zbiór danych to tabela, w której każda kolumna reprezentuje określon�
 
 ## Analiza MACD w pomocy przy kupnie sprzedaży
 
----
-
 ![acp_d.csv-macd.png](acp_d.csv1000-macd.png)
+
+---
 
 Pierwszy wykres przedstawia notowania akcji firmy Asseco Poland w całym badanym
 okresie. Spadek jest zauważalny w 2021 spowodowany pandemią oraz 2023.
@@ -64,41 +68,78 @@ Kluczowe momenty:
   rosnący portfel zamówień.
 
 Wykres MACD uzupełnia analizę cen akcji, pokazując momenty zmiany trendu oraz siłę ruchów cenowych.
+Przyjrzymy się teraz dwóm okresom.
 
 ![acp_d.csv100-macd.png](acp_d.csv100-macd.png "Okres spadku")
+![acp_d.csv100-macd.png](acp_d.csv100-capital.png "Okres spadku")
 
-### **Opis okresu spadku (2021-09 – 2022-03)**
+### **Pełna analiza okresu spadkowego (2021-09 – 2022-02)**
 
-1. **Wartość kapitału (wykres górny)**
-   - W okresie od **września 2021 do marca 2022** widoczny jest **spadek wartości portfela** z około **77 500 zł do 67 500 zł**, co oznacza stratę na poziomie **~13%**.
-   - Największe spadki występują w **listopadzie 2021** oraz **styczniu–lutym 2022**, co może być związane z ogólną niepewnością rynkową (np. inflacja, zmiany stóp procentowych).
+#### **1. Kontekst rynkowy i zmiany wartości kapitału**
+W analizowanym okresie (wrzesień 2021 – luty 2022) akcje Asseco Poland znajdowały się w **trendzie spadkowym**, co widać na wykresie wartości kapitału:
 
-2. **Analiza wskaźnika MACD (wykres dolny)**
-   - **2021-10 – 2021-11:** Wystąpiło **bearish cross** (skrzyżowanie niedźwiedzie), gdy linia MACD przecięła linię sygnałową **od góry**, co było wczesnym sygnałem do sprzedaży.
-   - **2022-01 – 2022-02:** Kolejne przecięcie w dół (**bearish cross**) potwierdziło kontynuację trendu spadkowego.
-   - W tym okresie **brak wyraźnych sygnałów kupna** (bullish cross), co wskazuje na **słabość rynku**.
+- **Wartość początkowa (2021-09-01):** 77 847,30 zł
+- **Wartość końcowa (2022-02-21):** 66 899,77 zł
+- **Łączna strata:** około 14%
+
+Największe spadki wystąpiły:
+- W listopadzie 2021 (pierwsze wyraźne przecięcie niedźwiedzie na MACD)
+- W styczniu-lutym 2022 (dalsze pogłębienie spadków)
+
+Wszystkie 5 zrealizowanych sygnałów kupna zakończyło się stratą, co wskazuje na:
+
+- 100% wskaźnik fałszywych sygnałów kupna
+- Średnia strata na pozycji: -2,58%
+- Największa pojedyncza strata: -5,39% (styczeń 2022)
+
+#### Przyczyny generowania fałszywych sygnałów
+- Trend spadkowy dominujący na rynku
+- Słabe warunki rynkowe
+- Brak wsparcia innych wskaźników
+- Zbyt częste przecięcia linii
+- Wąski zakres wahań powodował liczne, ale słabe przecięcia
+- Brak wyraźnego momentum wzrostowego
 
 ---
 
-### **Ocena przydatności MACD w podejmowaniu decyzji**
+![acp_d.csv100-macd.png](acp_d.csv101-macd.png "Okres spadku")
+![acp_d.csv100-macd.png](acp_d.csv101-capital.png "Okres spadku")
 
-#### **Transakcja 1: Sprzedaż po bearish cross (2021-10)**
-- **Sygnał:** Bearish cross (MACD przecina SIGNAL od góry).
-- **Akcja:** Sprzedaż akcji na początku listopada 2021.
-- **Wynik:** Uniknięcie dalszych spadków – gdyby inwestor trzymał akcje do marca 2022, strata wyniosłaby **~13%**.
+### **Analiza skuteczności MACD w okresie bez wyrażnych trendów 09.2023 - 03.2024**
 
-#### **Transakcja 2: Brak sygnału kupna (2022-01 – 2022-03)**
-- **Sygnał:** Brak bullish cross (MACD pozostaje poniżej SIGNAL).
-- **Interpretacja:** Wskaźnik prawidłowo **nie generował fałszywych sygnałów kupna**, co potwierdzało trend spadkowy.
+**Kapitał końcowy:** 63 420,76 zł (spadek o **~10.7%** od wartości początkowej 71 030,60 zł)
 
-#### **Podsumowanie skuteczności MACD**
-- **Zalety:**
-  - Wykrył **początek trendu spadkowego** (bearish cross w 2021-10).
-  - Uniknął **fałszywych sygnałów kupna** w trakcie spadków.
-- **Wady:**
-  - Nie wskazał **optymalnego momentu wyjścia** (np. odbicia w marcu 2022), ponieważ MACD reaguje z opóźnieniem.
-- **Wniosek:** MACD jest **przydatny jako filtr trendu**, ale powinien być używany z innymi wskaźnikami (np. RSI, wolumen) dla lepszej precyzji.
+#### **Ocena sygnałów MACD**
 
+**Jedyne skuteczne sygnały:**
+
+- **11.2023 (sprzedaż):** +2,83% (71 030,60 zł → 73 038,20 zł)
+- **12.2023 (kupno):** poprawny ruch kontynuacji trendu
+
+**Problematyczne sygnały:**
+
+1. **01.2024:** 3 nieudane cykle kupna-sprzedaży (strata łącznie ~5,5%)
+2. **02.2024:** 2 błędne sygnały (strata ~3%)
+3. **03.2024:** 2 kolejne straty (~3,7%)
+
+#### **Przyczyny niskiej skuteczności**
+
+1. **Brak trendu** - cena oscylowała
+2. **Zbyt częste przecięcia** linii MACD/Signal (średnio co 2-3 tygodnie)
+
+#### **Wnioski**
+
+MACD w tym okresie **nie był skutecznym wskaźnikiem**, głównie z powodu:
+
+- Braku wyraźnego trendu
+- Nadmiernej reakcji na krótkoterminowe wahania
+
+**Skuteczność można poprawić przez:**
+
+- Łączenie z analizą wolumenu i innymi wskażnikami
+- Ścisłe zasady zarządzania kapitałem
+
+---
 
 ## Symulacja
 
@@ -107,95 +148,61 @@ Program został opracowany w celu automatycznego podejmowania decyzji o kupnie l
 - Przecięcie od dołu – sygnał kupna aktywa,
 - Przecięcie od góry – sygnał sprzedaży aktywa
 
-Symulacja została przeprowadzona z kapitałem początkowym wynoszącym 1000 jednostek instrumentu finansowego. Analizowany okres wynosi 150 ostatnich dni z zawartych danych. Analiza obejmuje zmiany wartości portfela inwestycyjnego oraz skuteczność transakcji.
+Symulacja została przeprowadzona z kapitałem początkowym wynoszącym 1000 jednostek instrumentu finansowego. Analizowany okres wynosi 1000 ostatnich dni z zawartych danych. Analiza obejmuje zmiany wartości portfela inwestycyjnego oraz skuteczność transakcji.
 
-### Wyniki Symulacji dla acp_d
-- **Analizowany okres**: od 2024-07-23 do 2025-02-28
-- **Kapitał początkowy:** 1000 jednostek
-- **Kapitał końcowy:** 135526.42 jednostek
-- **Liczba transakcji:** 4 (2 kupna, 2 sprzedaże)
+### **Analiza Skuteczności Transakcji i Ocena Strategii MACD**
 
-#### Analiza Transakcji dla symulacji acp_d
-1. **SELL 2024-10-29**: Sprzedano instrumenty za 89750.0 PLN jednostek po cenie 89.75.
-2. **BUY 2024-11-26**: Zakupiono 1044.21 jednostek za 85.95 jednostek każda.
-	- Wzrot 4%
-3. **SELL 2024-12-16**: Sprzedano instrumenty za 96955.06 PLN jednostek po cenie 92.85.
-	- Wzrot 12%
-4. **BUY 2025-01-20**: Zakupiono 1003.16 jednostek za 96.65 jednostek każda.
-	- Wzrot 1%
-5. **SELL 2025-02-20**: Sprzedano instrumenty za 135526.42 PLN jednostek po cenie 135.1.
-	- Wzrot 23%
+![acp_d.csv100-macd.png](acp_d.csv1001-macd.png "Okres spadku")
+![acp_d.csv100-macd.png](acp_d.csv1001-capital.png "Okres spadku")
 
-Końcowo: 53%
+#### **Statystyki Transakcji:**
 
----
+1. **Liczba transakcji z zyskiem vs. stratą:**
 
-### Wyniki Symulacji dla wig20_d
-- **Analizowany okres**: od 2024-08-07 do 2025-03-17
-- **Kapitał początkowy:** 1000 jednostek
-- **Kapitał końcowy:** 2386334.55 jednostek
-- **Liczba transakcji:** 7 (4 kupna, 3 sprzedaże)
+   - **Zyskownych:** 17 (63%)
+   - **Stratnych:** 10 (37%)
 
-#### Analiza Transakcji dla symulacji wig20_d
-1. **SELL 2024-11-15**: Sprzedano instrumenty za 2188750.0 jednostek po cenie 2188.75.
-2. **BUY 2024-11-25**: Zakupiono 993.64 jednostek za 2202.76 jednostek każda.
-	- Wzrot 1%
-3. **SELL 2024-12-17**: Sprzedano instrumenty za 2197821.93 jednostek po cenie 2211.89.
-	- Wzrot 2%
-4. **BUY 2025-01-09**: Zakupiono 977.70 jednostek za 2247.94 jednostek każda.
-p	- Wzrot 1%
-5. **SELL 2025-02-05**: Sprzedano instrumenty za 2341329.46 jednostek po cenie 2394.72.
-	- Wzrot 13%
-6. **BUY 2025-02-10**: Zakupiono 933.72 jednostek za 2507.54 jednostek każda.
-	- Wzrot 3%
-7. **SELL 2025-02-24**: Sprzedano instrumenty za 2386334.55 jednostek po cenie 2555.74.
-	- Wzrot 5%
-8. **BUY 2025-03-13**: Zakupiono 889.41 jednostek za 2683.05 jednostek każda.
-	- Wzrot 2%
+2. **Średni zysk vs. średnia strata:**
 
-Końcowo: 17%
+   - **Średni zysk na transakcji:** +5.23%
+   - **Średnia strata na transakcji:** -2.89%
+
+3. **Najlepsza i najgorsza transakcja:**
+
+   - **Maksymalny zysk:** +15.58% (2023-05-08)
+   - **Maksymalna strata:** -6.69% (2021-11-24)
 
 ---
 
-### Wykresy
-- **Wartość Portfela:** Wykres ilustruje wzrost wartości portfela inwestycyjnego po każdej transakcji, osiągając końcową wartość 135526.42 jednostek dla **acp_d** i 2386334.55 jednostek dla **wig20_d**.
-- **MACD:** Wykres pokazuje sygnały kupna i sprzedaży na podstawie przecięcia linii MACD i Signal Line.
+#### **Skuteczność Wskaźnika MACD:**
 
-![acp_d.csv-capital.png](acp_d.csv-capital.png)
-![wig20_d.csv-capital.png](wig20_d.csv-capital.png)
+- **Wskaźnik skuteczności (Win Rate):** **63%** – większość transakcji zakończyła się zyskiem.
 
----
-
-### Skuteczność Transakcji
-- **Transakcje z zyskiem:** Wszystkie transakcje zakończyły się zyskiem, co wskazuje na wysoką skuteczność zastosowania wskaźnika **MACD** w tym przypadku.
-- **Skuteczność MACD:** Wskaźnik **MACD** okazał się skuteczny w generowaniu sygnałów kupna i sprzedaży, prowadząc do znaczącego wzrostu kapitału.
+- **Kluczowe obserwacje:**
+  - MACD skutecznie wychwytywał trendy wzrostowe (np. 2023 r.), ale generował fałszywe sygnały w okresach bocznych (np. 2022 r.).
+  - Dłuższe utrzymywanie pozycji w trendach przynosiło większe zyski niż krótkoterminowe transakcje.
 
 ---
 
-### Wnioski
-Program oparty na wskaźniku MACD wykazał wysoką skuteczność w automatycznym handlu, prowadząc do znacznego wzrostu kapitału inwestycyjnego. Wszystkie transakcje zakończyły się zyskiem, co potwierdza przydatność MACD w podejmowaniu decyzji inwestycyjnych. Jednak należy pamiętać, że MACD najlepiej sprawdza się w trendowych warunkach rynkowych. W sytuacjach dynamicznych zmian cen lub na rynkach o dużej zmienności może generować mylne sygnały, prowadząc do nietrafionych decyzji inwestycyjnych. Warto również zauważyć, że dane użyte w analizie były zgodne z dominującym trendem, co mogło dodatkowo wpłynąć na wysoką skuteczność strategii. Trend jest potwierdzony biorąc pod uwage szerszą perspektywe dla wykresu z 2000 dni. Lącznie MACD przyniósł zysk w przeważającej liczbie tranzakcji.
+#### **Wnioski i Rekomendacje:**
+
+1. **Zalety strategii:**
+   - **Dobrze sprawdza się w trendach** (np. wzrosty w 2023 i 2024 r.).
+   - **Niski współczynnik strat** dzięki filtrowaniu sygnałów (średnia strata mniejsza niż średni zysk).
+
+2. **Słabe strony:**
+
+   - **Wrażliwość na zmienność** – w okresach bocznych (np. 2022 r.) generował stratne sygnały.
+   - **Wymaga częstego monitorowania** (54 transakcje w 4 lata).
+
+3. **Optymalizacja:**
+
+   - **Dodanie filtra trendu** (np. SMA 200) mogłoby zmniejszyć liczbę fałszywych sygnałów.
+   - **Zmiana parametrów MACD** (np. 12/26/9) dla lepszego dopasowania do rynku.
 
 ---
 
-### Zalecenia
-- **Dalsze testy:** Warto przeprowadzić dodatkowe testy na różnych zestawach danych, aby zweryfikować skuteczność strategii w różnych warunkach rynkowych.
-- **Optymalizacja:** Można rozważyć optymalizację parametrów **MACD**, aby dostosować strategię do specyfiki danego instrumentu finansowego.
-
----
-
-### Pliki
-Wykres wartości portfela oraz wskaźnika **MACD** dla **acp_d** okresu 150 oraz 2000 dni.
-
-- **acp_d.csv-capital.png**
-- **acp_d.csv-macd.png**
-- **acp_d2000.csv-capital.png**
-- **acp_d2000.csv-macd.png**
-
-Wykres wartości portfela oraz wskaźnika **MACD** dla **wig20_d** okresu 150 oraz 2000 dni.
-
-- **wig20_d.csv-capital.png**
-- **wig20_d.csv-macd.png**
-- **wig20_d2000.csv-capital.png**
-- **wig20_d2000.csv-macd.png**
+### **Podsumowanie:**
+Strategia MACD w analizowanym okresie **była skuteczna (63% zyskownych transakcji, +69% kapitału)**, ale wymagała aktywnego zarządzania. Dalsza optymalizacja (np. dodanie filtrów) mogłaby poprawić jej stabilność. Wykresy transakcji pomogłyby w lepszej ocenie momentów wejścia/wyjścia.
 
 ---

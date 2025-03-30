@@ -4,8 +4,8 @@ import numpy as np
 
 #FILENAME = 'wig20_d.csv'
 FILENAME = 'acp_d.csv'
-S_TIME = 100
-TIME = 100
+S_TIME = 1000
+TIME = 1001
 
 print(FILENAME)
 
@@ -13,7 +13,7 @@ def load_data(filepath):
     data = pd.read_csv(filepath)
     data['Data'] = pd.to_datetime(data['Data'])
     data.set_index('Data', inplace=True)
-    data = data.loc["2021-09-01":"2022-04-01"]
+    # data = data.loc["2023-09-01":"2024-04-01"]
     data = data[::-1]  # reverse so the most recent is at index 0
     return data
 
@@ -105,7 +105,7 @@ def plot(data, macd, signal):
 
 
 # data = load_data(FILENAME)[:TIME]
-data = load_data(FILENAME)
+data = load_data(FILENAME)[:1000]
 closing = data['Zamkniecie']
 macd, signal = calc_macd_signal(closing.to_numpy())
 bearish_crossings, bullish_crossings, combined = crossings(macd, signal)
@@ -118,7 +118,7 @@ def simulate(closing, date, capital=1000):
     c_timestamps = [date[-1]]  # Start with the first timestamp
 
     print("TYPE", "DATE", "CAPITAL", "MONEY", "CLOSING", "TOTAL", sep='\t')
-    print("START", date[-1], capital, money, portfolio_value[0], sep='\t')
+    print("START", date[-1], capital, portfolio_value[0], closing.iloc[-1], sep='\t')
 
     for crossing in reversed(combined):
         idx, direction = crossing
@@ -130,6 +130,7 @@ def simulate(closing, date, capital=1000):
             c_timestamps.append(date[idx])
             # portfolio_value.append(total_value)
             # timestamps.append(date[idx])
+            print("BUY", date[idx], total_value, sep='\t\t')
         elif direction == "BOT" and capital > 0:
             money = capital * closing.iloc[idx]
             capital = 0
